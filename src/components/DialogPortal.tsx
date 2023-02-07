@@ -56,7 +56,6 @@ export const DialogPortal: React.FC<{
   const ariaLabelledBy = dialogEvent?.type === 'openModal' ? dialogEvent.options?.ariaLabelledBy : '';
   const ariaDescribedBy = dialogEvent?.type === 'openModal' ? dialogEvent.options?.ariaDescribedBy : '';
 
-
   useEffect(() => {
     const subscription = DialogService.getInstance().getDialog().subscribe((event) => {
       setDialogEvent(event);
