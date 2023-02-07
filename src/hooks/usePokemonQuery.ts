@@ -69,6 +69,7 @@ export const usePokemonQuery = (props: {
         name: pokemon.name,
         img: pokemon.sprites.front_default ?? '../../public/no-image.png',
         isLoading,
+        value: pokemon,
       };
     }
     const foundPokemonName = pokemonList?.results[index].name ?? 'Error';
@@ -77,6 +78,7 @@ export const usePokemonQuery = (props: {
       name: foundPokemonName,
       img: '',
       isLoading,
+      value: null,
     };
   }) ?? [];
 
