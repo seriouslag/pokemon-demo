@@ -1,41 +1,30 @@
-import { ListResponse, Pokemon } from '../api/pokemon/src/generated';
 import { PokemonClient } from '../PokemonClient';
-import { AppDispatch } from '../store';
 
 const pokemonApi = new PokemonClient({
   baseUrl: 'https://pokeapi.co/api',
 });
 
-const fetchPokemonListSuccess = (pokemon: ListResponse) => ({
+const fetchPokemonListSuccess = (pokemon) => ({
   type: 'FETCH_POKEMON_LIST_SUCCESS',
   payload: pokemon,
-} as const);
+});
 
-const fetchPokemonListFailure = (error: unknown) => ({
+const fetchPokemonListFailure = (error) => ({
   type: 'FETCH_POKEMON_LIST_FAILURE',
   payload: error,
-} as const);
+});
 
-const fetchPokemonListAction = (payload: {
-  offset: number;
-  limit: number;
-}) => ({
+const fetchPokemonListAction = (payload) => ({
   type: 'FETCH_POKEMON_LIST',
   payload,
-} as const);
+});
 
-const setPokemonAction = (payload: {
-  id: number;
-  name: string;
-  img: string;
-  isLoading: boolean;
-  value: Pokemon|null;
-}[]) => ({
+const setPokemonAction = (payload) => ({
   type: 'SET_POKEMON',
   payload,
-} as const);
+});
 
-export const fetchPokemonList = (limit: number, offset: number) => async (dispatch: AppDispatch) => {
+export const fetchPokemonList = (limit, offset) => async (dispatch) => {
   try {
     const pokemonList = await pokemonApi.pokemonList({
       limit,
@@ -55,7 +44,7 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
       name: pokemon.name,
       img: '',
       isLoading: true,
-      value: null as Pokemon|null,
+      value: null,
     }));
 
     // set mapped pokemon
@@ -88,21 +77,21 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
   }
 };
 
-const setLimitAction = (limit: number) => ({
+const setLimitAction = (limit) => ({
   type: 'POKEMON_SET_LIMIT',
   payload: limit,
-} as const);
+});
 
-const setOffsetAction = (offset: number) => ({
+const setOffsetAction = (offset) => ({
   type: 'POKEMON_SET_OFFSET',
   payload: offset,
-} as const);
+});
 
-export const setLimit = (limit: number) => (dispatch: AppDispatch) => {
+export const setLimit = (limit) => (dispatch) => {
   dispatch(setLimitAction(limit));
 };
 
-export const setOffset = (offset: number) => (dispatch: AppDispatch) => {
+export const setOffset = (offset) => (dispatch) => {
   dispatch(setOffsetAction(offset));
 };
 
@@ -114,5 +103,3 @@ export const PokemonActions = {
   setOffsetAction,
   setPokemonAction,
 };
-
-export type PokemonActionTypes = ReturnType<typeof PokemonActions[keyof typeof PokemonActions]>;
