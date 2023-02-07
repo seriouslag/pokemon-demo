@@ -1,4 +1,4 @@
-import { ListResponse, Pokemon } from '../api/pokemon/src/generated';
+import { ListResponse, Pokemon } from 'src/PokemonClient';
 import { PokemonActionTypes } from '../actions/pokemon';
 
 interface PokemonState {

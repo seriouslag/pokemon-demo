@@ -1,4 +1,4 @@
-import { Pokemon } from '@myapi/api-pokemon';
+import { Pokemon } from 'src/PokemonClient';
 
 type PokemonViewerProps = {
   pokemon: {

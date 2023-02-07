@@ -5,8 +5,8 @@ import { getPokemonCount, getPokemonPage } from '../../selectors/pokemon';
 import { fetchPokemonList, setLimit } from '../../actions/pokemon';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-import PokemonViewerQuery from '../PokemonViewer/PokemonViewerQuery';
 import { DialogService } from '../DialogPortal';
+import PokemonViewerRedux from '../PokemonViewer/PokemonViewerRedux';
 
 type PokemonListReduxProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
@@ -67,7 +67,7 @@ const PokemonListRedux: React.FC<PokemonListReduxProps> = ({
           DialogService.getInstance().setDialog({
             type: 'openModal',
             title: `${params.row.name} Details`,
-            modal: <PokemonViewerQuery name={params.row.name} />,
+            modal: <PokemonViewerRedux name={params.row.name} />,
           });
         }}
       />

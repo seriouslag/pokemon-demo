@@ -1,4 +1,36 @@
-import { ListResponse, Pokemon } from './api/pokemon/src/generated';
+export type ListResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Array<{
+    name: string;
+    url: string;
+  }>;
+};
+
+
+export type Pokemon = {
+  abilities: any[];
+  base_experience: number;
+  forms: any[]
+  game_indices: any[];
+  height: number;
+  held_items: any[];
+  id: number;
+  is_default: boolean;
+  location_area_encounters: string;
+  moves: any[];
+  name: string;
+  order: number;
+  species: {
+    name: string;
+    url: string;
+  };
+  sprites: any;
+  stats: any[];
+  types: any[];
+  weight: number;
+};
 
 export class PokemonClient {
   constructor(private options: {

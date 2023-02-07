@@ -1,5 +1,4 @@
-import { ListResponse, Pokemon } from '../api/pokemon/src/generated';
-import { PokemonClient } from '../PokemonClient';
+import { ListResponse, Pokemon, PokemonClient } from '../PokemonClient';
 import { AppDispatch } from '../store';
 
 const pokemonApi = new PokemonClient({
