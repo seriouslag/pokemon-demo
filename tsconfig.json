@@ -16,12 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "rootDir": ".",
-    "paths": {
-      "@myapi/api-*": [
-        "./src/api/*/src/index"
-      ]
-    }
+    "rootDir": "."
   },
   "include": [
     "src/**/*.ts",

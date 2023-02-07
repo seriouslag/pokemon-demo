@@ -7,9 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "bootstrap": "lerna bootstrap --hoist --strict",
-    "downloadApi": "lerna run downloadApi",
-    "generateApi": "lerna run generateApi",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
