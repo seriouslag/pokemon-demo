@@ -2,8 +2,7 @@ import './App.css';
 import PokemonListRedux from './components/PokemonList/PokemonListRedux';
 import DialogPortal, { DialogService } from './components/DialogPortal';
 
-function App() {
-
+const App: React.FC = () => {
   const dialogService = DialogService.getInstance();
 
   return (
@@ -20,7 +19,7 @@ function App() {
       <DialogPortal dialogService={dialogService} />
     </>
   );
-}
+};
 
 export default App;
 
