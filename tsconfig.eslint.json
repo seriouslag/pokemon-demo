@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "declaration": false,
+    "declarationMap": false,
+    "isolatedModules": false,
+    "noImplicitReturns": true,
+    "importHelpers": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "preserveConstEnums": true
+  }
+}
