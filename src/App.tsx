@@ -16,8 +16,7 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
-
+const App: React.FC = () => {
   const dialogService = DialogService.getInstance();
 
   return (
@@ -44,7 +43,7 @@ function App() {
       </QueryClientProvider>
     </>
   );
-}
+};
 
 export default App;
 

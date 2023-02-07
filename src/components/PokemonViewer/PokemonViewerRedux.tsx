@@ -23,7 +23,7 @@ const mapState = (state: RootState) => ({
   pokemon: state.pokemon.pokemon,
 });
 
-const mapDispatch = (dispatch: AppDispatch) => ({
+const mapDispatch = (_dispatch: AppDispatch) => ({
 });
 
 export default connect(mapState, mapDispatch)(PokemonViewerRedux);
