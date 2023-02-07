@@ -1,8 +1,8 @@
 import { ListResponse, Pokemon } from '../api/pokemon/src/generated';
-import { PokemonClient } from '../PokemonClient';
+import { clientFromContext } from '@myapi/api-pokemon';
 import { AppDispatch } from '../store';
 
-const pokemonApi = new PokemonClient({
+const pokemonApi = clientFromContext({
   baseUrl: 'https://pokeapi.co/api',
 });
 
@@ -37,7 +37,7 @@ const setPokemonAction = (payload: {
 
 export const fetchPokemonList = (limit: number, offset: number) => async (dispatch: AppDispatch) => {
   try {
-    const pokemonList = await pokemonApi.pokemonList({
+    const pokemonList = await pokemonApi.pokemon.pokemonList({
       limit,
       offset,
     });
@@ -65,7 +65,7 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
     const promises = mappedPokemon.map(async (pokemon, index) => {
       const pokeId = pokemon.id;
       // fetch pokemon details
-      const pokemonDetail = await pokemonApi.pokemonRead({ name: pokemon.name });
+      const pokemonDetail = await pokemonApi.pokemon.pokemonRead({ name: pokemon.name });
       // find pokemon in mapped pokemon
       // doing this to make sure the pokemon is still in the list in case the user has changed the page
       const foundPokemon = mappedPokemon.findIndex((pokemon) => pokemon.id === pokeId);
