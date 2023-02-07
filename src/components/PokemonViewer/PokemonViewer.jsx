@@ -1,17 +1,4 @@
-import { Pokemon } from '@myapi/api-pokemon';
-
-type PokemonViewerProps = {
-  pokemon: {
-    id: number;
-    name: string;
-    img: string;
-    isLoading: boolean;
-    value: Pokemon|null;
-  }|undefined;
-  isLoading: boolean;
-};
-
-const PokemonViewer: React.FC<PokemonViewerProps> = ({ pokemon, isLoading }) => {
+const PokemonViewer = ({ pokemon, isLoading }) => {
 
   if (isLoading) {
     return <div>Loading...</div>;

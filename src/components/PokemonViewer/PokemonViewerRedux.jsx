@@ -1,13 +1,7 @@
-import { AppDispatch, RootState } from '../../store';
 import { connect } from 'react-redux';
 import PokemonViewer from './PokemonViewer';
 
-type PokemonListReduxProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & {
-  /** Name of pokemon */
-  name: string;
-};
-
-const PokemonViewerRedux: React.FC<PokemonListReduxProps> = ({
+const PokemonViewerRedux = ({
   pokemon,
   name,
 }) => {
@@ -19,11 +13,11 @@ const PokemonViewerRedux: React.FC<PokemonListReduxProps> = ({
   );
 };
 
-const mapState = (state: RootState) => ({
+const mapState = (state) => ({
   pokemon: state.pokemon.pokemon,
 });
 
-const mapDispatch = (dispatch: AppDispatch) => ({
+const mapDispatch = (_dispatch) => ({
 });
 
 export default connect(mapState, mapDispatch)(PokemonViewerRedux);

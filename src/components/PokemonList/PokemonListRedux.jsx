@@ -1,16 +1,13 @@
-import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { Skeleton } from '@mui/material';
-import { AppDispatch, RootState } from '../../store';
 import { getPokemonCount, getPokemonPage } from '../../selectors/pokemon';
 import { fetchPokemonList, setLimit } from '../../actions/pokemon';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-import PokemonViewerQuery from '../PokemonViewer/PokemonViewerQuery';
 import { DialogService } from '../DialogPortal';
+import PokemonViewerRedux from '../PokemonViewer/PokemonViewerRedux';
 
-type PokemonListReduxProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
-
-const PokemonListRedux: React.FC<PokemonListReduxProps> = ({
+const PokemonListRedux = ({
   isLoading,
   pokemon,
   error,
@@ -26,7 +23,7 @@ const PokemonListRedux: React.FC<PokemonListReduxProps> = ({
     fetchPokemonList(limit, page * limit);
   }, []);
 
-  const columns: GridColDef[] = [
+  const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Name', width: 130 },
     {
@@ -58,16 +55,11 @@ const PokemonListRedux: React.FC<PokemonListReduxProps> = ({
         onPageChange={(newPage) => onPageChange(newPage, limit)}
         onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
         disableSelectionOnClick
-        onRowClick={(params: GridRowParams<{
-          id: number;
-          name: string;
-          img: string;
-          isLoading: boolean;
-        }>) => {
+        onRowClick={(params) => {
           DialogService.getInstance().setDialog({
             type: 'openModal',
             title: `${params.row.name} Details`,
-            modal: <PokemonViewerQuery name={params.row.name} />,
+            modal: <PokemonViewerRedux name={params.row.name} />,
           });
         }}
       />
@@ -75,7 +67,7 @@ const PokemonListRedux: React.FC<PokemonListReduxProps> = ({
   );
 };
 
-const mapState = (state: RootState) => ({
+const mapState = (state) => ({
   isLoading: state.pokemon.loading,
   pokemon: state.pokemon.pokemon,
   error: state.pokemon.error,
@@ -85,10 +77,10 @@ const mapState = (state: RootState) => ({
   count: getPokemonCount(state),
 });
 
-const mapDispatch = (dispatch: AppDispatch) => ({
-  fetchPokemonList: (limit: number, offset: number) => dispatch(fetchPokemonList(limit, offset)),
-  setLimit: (limit: number) => dispatch(setLimit(limit)),
-  onPageChange: (newPage: number, limit: number) => dispatch(fetchPokemonList(limit, newPage * limit)),
+const mapDispatch = (dispatch) => ({
+  fetchPokemonList: (limit, offset) => dispatch(fetchPokemonList(limit, offset)),
+  setLimit: (limit) => dispatch(setLimit(limit)),
+  onPageChange: (newPage, limit) => dispatch(fetchPokemonList(limit, newPage * limit)),
 });
 
 export default connect(mapState, mapDispatch)(PokemonListRedux);

@@ -1,22 +1,4 @@
-import { ListResponse, Pokemon } from '../api/pokemon/src/generated';
-import { PokemonActionTypes } from '../actions/pokemon';
-
-interface PokemonState {
-  limit: number;
-  offset: number;
-  pokemonList: ListResponse|null;
-  pokemon: {
-    id: number;
-    name: string;
-    img: string;
-    isLoading: boolean;
-    value: Pokemon|null;
-  }[];
-  error: unknown|null;
-  loading: boolean;
-}
-
-const initialState: PokemonState = {
+const initialState = {
   limit: 100,
   offset: 0,
   pokemonList: null,
@@ -25,7 +7,7 @@ const initialState: PokemonState = {
   loading: false,
 };
 
-export const pokemonReducer = (state = initialState, action: PokemonActionTypes) => {
+export const pokemonReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_POKEMON_LIST':
       return {
