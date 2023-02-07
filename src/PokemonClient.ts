@@ -8,7 +8,6 @@ export type ListResponse = {
   }>;
 };
 
-
 export type Pokemon = {
   abilities: any[];
   base_experience: number;
