@@ -1,7 +1,5 @@
 import './App.css';
 import PokemonListHooks from './components/PokemonList/PokemonListHooks';
-import PokemonListRedux from './components/PokemonList/PokemonListRedux';
-import PokemonListHooksQuery from './components/PokemonList/PokemonListHooksQuery';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import DialogPortal, { DialogService } from './components/DialogPortal';
 
@@ -24,19 +22,11 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <div className="flex flex-col justify-center">
-          <h1 className='text-2xl'>React Query vs Redux vs Hooks</h1>
-          <div className="container grid gap-4 lg:grid-cols-3">
+          <h1 className='text-2xl'>Pokemon API</h1>
+          <div className="container grid gap-4 lg:grid-cols-1">
             <div>
-              <h1 className='text-lg'>Using Redux</h1>
-              <PokemonListRedux />
-            </div>
-            <div>
-              <h1 className='text-lg'>Using Hooks</h1>
+              <h1 className='text-lg'>State is using a hook</h1>
               <PokemonListHooks />
-            </div>
-            <div>
-              <h1 className='text-lg'>Using React Query</h1>
-              <PokemonListHooksQuery />
             </div>
           </div>
         </div>
