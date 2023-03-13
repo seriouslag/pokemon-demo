@@ -26,6 +26,7 @@ const mapDispatch = {
 export const connector = connect(mapState, mapDispatch);
 
 const reducers = combineReducers({
+  // add additional reducers here
   pokemon: pokemonReducer,
 });
 

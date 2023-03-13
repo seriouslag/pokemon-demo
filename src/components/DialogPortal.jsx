@@ -3,9 +3,11 @@ import React, { useEffect } from 'react';
 import { BehaviorSubject } from 'rxjs';
 
 export class DialogService {
+  /** @singleton */
   static instance;
-  dialog = new BehaviorSubject(null);
+  #dialog = new BehaviorSubject(null);
 
+  /** Creates or returns the already created singleton instance */
   static getInstance() {
     if (!DialogService.instance) {
       DialogService.instance = new DialogService();
@@ -14,15 +16,21 @@ export class DialogService {
     return DialogService.instance;
   }
 
+  /** Set dialog event */
   setDialog(event) {
-    this.dialog.next(event);
+    this.#dialog.next(event);
   }
 
+  /** Gets a reference to the current dialog */
   getDialog() {
-    return this.dialog;
+    return this.#dialog;
   }
 }
 
+/**
+ * DialogPortal subscribes to events in the provided instance
+ * of DialogService and updates the UI on event change
+ */
 export const DialogPortal = ({
   dialogService,
 }) => {
@@ -37,16 +45,21 @@ export const DialogPortal = ({
 
 
   useEffect(() => {
-    const subscription = DialogService.getInstance().getDialog().subscribe((event) => {
+    // Subscribe to dialog events
+    const subscription = dialogService.getDialog().subscribe((event) => {
+      // Update dialog event when it changes
       setDialogEvent(event);
     });
     return () => {
+      // Unsubscribe from dialog events
       subscription.unsubscribe();
     };
   }, [dialogService]);
 
   const onClose = () => {
+    // Call onClose callback if it exists
     dialogEvent?.type === 'openModal' && dialogEvent.options?.onClose?.();
+    // Sync the dialog UI state with the dialog service
     dialogService.setDialog({
       type: 'closeModal',
     });

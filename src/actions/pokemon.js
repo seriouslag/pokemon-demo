@@ -24,6 +24,15 @@ const setPokemonAction = (payload) => ({
   payload,
 });
 
+/**
+ * Fetch list of pokemon using limit and offset. The result will be mapped to a new array of pokemon
+ * with the id, name, img, isLoading, and value properties. The pokemon will be in a loading state until
+ * the pokemon details are fetched. In the loading state the img property will be an empty string and
+ * the isLoading property will be true and the value property will be null. The pokemon details will be
+ * fetched in parallel and the mapped pokemon array will be updated with the fetched details after each update.
+ * @param limit - number of pokemon to fetch
+ * @param offset - offset of pokemon to fetch
+ */
 export const fetchPokemonList = (limit, offset) => async (dispatch) => {
   try {
     const pokemonList = await pokemonApi.pokemonList({
