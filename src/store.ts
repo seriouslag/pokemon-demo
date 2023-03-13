@@ -30,6 +30,7 @@ export const connector = connect(mapState, mapDispatch);
 export type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const reducers = combineReducers({
+  // add additional reducers here
   pokemon: pokemonReducer,
 });
 
