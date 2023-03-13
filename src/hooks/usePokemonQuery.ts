@@ -8,6 +8,9 @@ const keys = {
   getPokemonByName: 'getPokemonByName',
 } as const;
 
+/**
+ * Fetch list of pokemon using limit and offset.
+ */
 export const useGetPokemonList = (limit: number, offset: number) => {
   return useQuery({
     queryKey: [keys.getPokemonList, limit, offset],
@@ -27,6 +30,9 @@ const fetchPokemonByName = async (name: string) => {
   return response;
 };
 
+/**
+ * Fetch pokemon by name.
+ */
 export const useGetPokemonByName = (name: string, enabled = true) => {
   return useQuery({
     queryKey: [keys.getPokemonByName, name],
@@ -35,6 +41,9 @@ export const useGetPokemonByName = (name: string, enabled = true) => {
   });
 };
 
+/**
+ * Fetch pokemon by name in parallel.
+ */
 export const useGetPokemonByNames = (names: string[], enabled = true) => {
   return useQueries({
     queries: [
@@ -47,6 +56,13 @@ export const useGetPokemonByNames = (names: string[], enabled = true) => {
   });
 };
 
+/**
+ * Fetch list of pokemon using limit and offset. The result will be mapped to a new array of pokemon
+ * with the id, name, img, isLoading, and value properties. The pokemon will be in a loading state until
+ * the pokemon details are fetched. In the loading state the img property will be an empty string and
+ * the isLoading property will be true and the value property will be null. The pokemon details will be
+ * fetched in parallel and the mapped pokemon array will be updated with the fetched details after each update.
+ */
 export const usePokemonQuery = (props: {
   /** Limit of results to fetch */
   limit: number,

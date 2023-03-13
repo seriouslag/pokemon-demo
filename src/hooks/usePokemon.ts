@@ -2,6 +2,9 @@ import { clientFromContext, ListResponse, Pokemon } from '@myapi/api-pokemon';
 import { useEffect, useState } from 'react';
 import { PokemonHook } from './PokemonHook';
 
+/**
+ * Hook to fetch pokemon list and details
+ */
 export const usePokemon = (props: {
   /** Limit of results to fetch */
   limit: number,
