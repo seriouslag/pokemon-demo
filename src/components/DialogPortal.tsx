@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import React, { useEffect } from 'react';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export type ModalValue = string | React.ReactNode | null;
 
@@ -37,7 +37,7 @@ export class DialogService {
     this.dialog.next(event);
   }
 
-  public getDialog() {
+  public getDialog(): Subject<ModalEvents|null> {
     return this.dialog;
   }
 }
@@ -58,16 +58,21 @@ export const DialogPortal: React.FC<{
 
 
   useEffect(() => {
-    const subscription = DialogService.getInstance().getDialog().subscribe((event) => {
+    // Subscribe to dialog events
+    const subscription = dialogService.getDialog().subscribe((event) => {
+      // Update dialog event when it changes
       setDialogEvent(event);
     });
     return () => {
+      // Unsubscribe from dialog events
       subscription.unsubscribe();
     };
   }, [dialogService]);
 
   const onClose = () => {
+    // Call onClose callback if it exists
     dialogEvent?.type === 'openModal' && dialogEvent.options?.onClose?.();
+    // Sync the dialog UI state with the dialog service
     dialogService.setDialog({
       type: 'closeModal',
     });
