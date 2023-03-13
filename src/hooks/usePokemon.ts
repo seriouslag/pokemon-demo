@@ -2,6 +2,9 @@ import { clientFromContext, ListResponse, Pokemon } from '@myapi/api-pokemon';
 import { useEffect, useState } from 'react';
 import { PokemonHook } from './PokemonHook';
 
+/**
+ * Hook to fetch pokemon list and details
+ */
 export const usePokemon = (props: {
   /** Limit of results to fetch */
   limit: number,
@@ -24,6 +27,15 @@ export const usePokemon = (props: {
     value: Pokemon|null;
   }[]>([]);
 
+  /**
+   * Fetch list of pokemon using limit and offset. The result will be mapped to a new array of pokemon
+   * with the id, name, img, isLoading, and value properties. The pokemon will be in a loading state until
+   * the pokemon details are fetched. In the loading state the img property will be an empty string and
+   * the isLoading property will be true and the value property will be null. The pokemon details will be
+   * fetched in parallel and the mapped pokemon array will be updated with the fetched details after each update.
+   * @param limit - number of pokemon to fetch
+   * @param offset - offset of pokemon to fetch
+   */
   const fetchPokemonList = async (limit: number, offset: number) => {
     // reset loading state
     setIsLoading(true);
