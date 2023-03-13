@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import React, { useEffect } from 'react';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export type ModalValue = string | React.ReactNode | null;
 
@@ -22,9 +22,11 @@ export type CloseModalEvent = {
 export type ModalEvents = OpenModalEvent | CloseModalEvent;
 
 export class DialogService {
+  /** @singleton */
   private static instance: DialogService;
   private dialog = new BehaviorSubject<ModalEvents|null>(null);
 
+  /** Creates or returns the already created singleton instance */
   public static getInstance(): DialogService {
     if (!DialogService.instance) {
       DialogService.instance = new DialogService();
@@ -33,15 +35,21 @@ export class DialogService {
     return DialogService.instance;
   }
 
+  /** Set dialog event */
   public setDialog(event: ModalEvents): void {
     this.dialog.next(event);
   }
 
-  public getDialog() {
+  /** Gets a reference to the current dialog */
+  public getDialog(): Subject<ModalEvents|null> {
     return this.dialog;
   }
 }
 
+/**
+ * DialogPortal subscribes to events in the provided instance
+ * of DialogService and updates the UI on event change
+ */
 export const DialogPortal: React.FC<{
   dialogService: DialogService;
 }> = ({
@@ -57,7 +65,9 @@ export const DialogPortal: React.FC<{
   const ariaDescribedBy = dialogEvent?.type === 'openModal' ? dialogEvent.options?.ariaDescribedBy : '';
 
   useEffect(() => {
-    const subscription = DialogService.getInstance().getDialog().subscribe((event) => {
+    // Subscribe to dialog events
+    const subscription = dialogService.getDialog().subscribe((event) => {
+      // Update dialog event when it changes
       setDialogEvent(event);
     });
     return () => {
@@ -66,7 +76,9 @@ export const DialogPortal: React.FC<{
   }, [dialogService]);
 
   const onClose = () => {
+    // Call onClose callback if it exists
     dialogEvent?.type === 'openModal' && dialogEvent.options?.onClose?.();
+    // Sync the dialog UI state with the dialog service
     dialogService.setDialog({
       type: 'closeModal',
     });
