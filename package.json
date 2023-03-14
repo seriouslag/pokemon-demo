@@ -5,13 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "postinstall": "npm run setup",
-    "setup": "npm run bootstrap && npm run downloadApi && npm run generateApi && npm run bootstrap",
     "dev": "vite",
     "build": "tsc && vite build",
-    "bootstrap": "lerna bootstrap --hoist --strict",
-    "downloadApi": "lerna run downloadApi",
-    "generateApi": "lerna run generateApi",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
