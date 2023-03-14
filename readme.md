@@ -1,12 +1,12 @@
-# Pokemon Viewer - A simple Pokemon viewer
+# Pokémon Viewer - A simple Pokémon viewer
 
-This is a simple Pokemon viewer that uses the [PokeAPI](https://pokeapi.co/) to display information about Pokemon.
+This is a simple Pokémon viewer that uses the [PokéAPI](https://pokeapi.co/) to display information about Pokémon.
 
 ## Stage Description
 
 ### Stage 1 - Redux State
-  The first stage of this project is to demonstrate using Javascript and Redux.
-  This is how state is currently managed in some applications.
+  The first stage of this project is to demonstrate the combined use of JavaScript and Redux.
+  This is how state is currently managed in some frontend Early Payments applications.
   
   This is a straightforward implementation of Redux, with no additional libraries.
   The state is managed in a single store, and the components are connected to the store
@@ -57,16 +57,16 @@ Runs the linter on the project.
 
 ### `npm run bootstrap`
 
-Bootstraps the project by installing dependencies of packages. This will automatically be run when you run `npm install`.
+Bootstraps the project by installing dependencies of packages. This will automatically run when you run `npm install`.
 
 ### `npm run downloadApi`
 
-Downloads the PokeAPI and saves it in this project. This will automatically be run when you run `npm install`.
+Downloads the PokéAPI and saves it in this project. This will automatically run when you run `npm install`.
 
 ### `npm run generateApi`
 
-Generates the API from the downloaded PokeAPI. This will automatically be run when you run `npm install`.
+Generates the API from the downloaded PokéAPI. This will automatically run when you run `npm install`.
 
 ### `npm run setup`
 
-Alias for `npm run bootstrap && npm run downloadApi && npm run generateApi`. This will automatically be run when you run `npm install`.
+Alias for `npm run bootstrap && npm run downloadApi && npm run generateApi`. This will automatically run when you run `npm install`.
