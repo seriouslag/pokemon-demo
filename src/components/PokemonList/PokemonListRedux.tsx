@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import PokemonViewerQuery from '../PokemonViewer/PokemonViewerQuery';
 import { DialogService } from '../DialogPortal';
+import { Constants } from '../../Constants';
 
 type PokemonListReduxProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>;
 
@@ -44,34 +45,33 @@ const PokemonListRedux: React.FC<PokemonListReduxProps> = ({
   }
 
   return (
-    <div style={{ height: 600 }}>
-      <DataGrid
-        rowHeight={100}
-        rows={pokemon}
-        rowCount={count}
-        columns={columns}
-        page={page}
-        pageSize={limit}
-        pagination={true}
-        paginationMode={'server'}
-        loading={isLoading}
-        onPageChange={(newPage) => onPageChange(newPage, limit)}
-        onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
-        disableSelectionOnClick
-        onRowClick={(params: GridRowParams<{
+    <DataGrid
+      rowHeight={100}
+      rows={pokemon}
+      rowCount={count}
+      columns={columns}
+      page={page}
+      pageSize={limit}
+      pagination={true}
+      paginationMode={'server'}
+      loading={isLoading}
+      onPageChange={(newPage) => onPageChange(newPage, limit)}
+      onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
+      rowsPerPageOptions={Constants.TABLE_ROWS_PER_PAGE_OPTIONS}
+      disableSelectionOnClick
+      onRowClick={(params: GridRowParams<{
           id: number;
           name: string;
           img: string;
           isLoading: boolean;
         }>) => {
-          DialogService.getInstance().setDialog({
-            type: 'openModal',
-            title: `${params.row.name} Details`,
-            modal: <PokemonViewerQuery name={params.row.name} />,
-          });
-        }}
-      />
-    </div>
+        DialogService.getInstance().setDialog({
+          type: 'openModal',
+          title: `${params.row.name} Details`,
+          modal: <PokemonViewerQuery name={params.row.name} />,
+        });
+      }}
+    />
   );
 };
 

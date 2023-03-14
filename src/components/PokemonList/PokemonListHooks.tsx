@@ -4,6 +4,7 @@ import { usePokemon } from '../../hooks/usePokemon';
 import { DialogService } from '../DialogPortal';
 import PokemonViewer from '../PokemonViewer/PokemonViewer';
 import { Pokemon } from '@myapi/api-pokemon';
+import { Constants } from '../../Constants';
 
 const PokemonListHooks: React.FC = () => {
 
@@ -17,8 +18,8 @@ const PokemonListHooks: React.FC = () => {
     setLimit,
     count,
   } = usePokemon({
-    limit: 100,
-    offset: 0,
+    limit: Constants.DEFAULT_LIMIT,
+    offset: Constants.DEFAULT_OFFSET,
   });
 
   const columns: GridColDef[] = [
@@ -39,36 +40,35 @@ const PokemonListHooks: React.FC = () => {
   }
 
   return (
-    <div style={{ height: 600 }}>
-      <DataGrid
-        rowHeight={100}
-        rows={pokemon}
-        rowCount={count}
-        columns={columns}
-        page={page}
-        pageSize={limit}
-        pagination={true}
-        paginationMode={'server'}
-        loading={isLoading}
-        onPageChange={(newPage) => onPageChange(newPage)}
-        onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
-        disableSelectionOnClick
-        onRowClick={(params: GridRowParams<{
+    <DataGrid
+      rowHeight={100}
+      rows={pokemon}
+      rowCount={count}
+      columns={columns}
+      page={page}
+      pageSize={limit}
+      pagination={true}
+      paginationMode={'server'}
+      loading={isLoading}
+      onPageChange={(newPage) => onPageChange(newPage)}
+      onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
+      rowsPerPageOptions={Constants.TABLE_ROWS_PER_PAGE_OPTIONS}
+      disableSelectionOnClick
+      onRowClick={(params: GridRowParams<{
           id: number;
           name: string;
           img: string;
           isLoading: boolean;
           value: Pokemon;
         }>) => {
-          const foundPokemon = pokemon.find((p) => p.id === params.row.id);
-          DialogService.getInstance().setDialog({
-            type: 'openModal',
-            title: `${params.row.name} Details`,
-            modal: <PokemonViewer pokemon={foundPokemon} isLoading={false} />,
-          });
-        }}
-      />
-    </div>
+        const foundPokemon = pokemon.find((p) => p.id === params.row.id);
+        DialogService.getInstance().setDialog({
+          type: 'openModal',
+          title: `${params.row.name} Details`,
+          modal: <PokemonViewer pokemon={foundPokemon} isLoading={false} />,
+        });
+      }}
+    />
   );
 };
 

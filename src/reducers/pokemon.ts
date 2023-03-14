@@ -1,5 +1,6 @@
 import { ListResponse, Pokemon } from '../api/pokemon/src/generated';
 import { PokemonActionTypes } from '../actions/pokemon';
+import { Constants } from '../Constants';
 
 interface PokemonState {
   limit: number;
@@ -17,8 +18,8 @@ interface PokemonState {
 }
 
 const initialState: PokemonState = {
-  limit: 100,
-  offset: 0,
+  limit: Constants.DEFAULT_LIMIT,
+  offset: Constants.DEFAULT_OFFSET,
   pokemonList: null,
   pokemon: [],
   error: null,

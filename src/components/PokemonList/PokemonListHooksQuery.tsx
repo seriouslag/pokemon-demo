@@ -3,6 +3,7 @@ import { Skeleton } from '@mui/material';
 import { usePokemonQuery } from '../../hooks/usePokemonQuery';
 import PokemonViewerQuery from '../PokemonViewer/PokemonViewerQuery';
 import { DialogService } from '../DialogPortal';
+import { Constants } from '../../Constants';
 
 const PokemonListHooksQuery: React.FC = () => {
 
@@ -16,8 +17,8 @@ const PokemonListHooksQuery: React.FC = () => {
     setLimit,
     count,
   } = usePokemonQuery({
-    limit: 100,
-    offset: 0,
+    limit: Constants.DEFAULT_LIMIT,
+    offset: Constants.DEFAULT_OFFSET,
   });
 
   const columns: GridColDef<{
@@ -43,39 +44,38 @@ const PokemonListHooksQuery: React.FC = () => {
   }
 
   return (
-    <div style={{ height: 600 }}>
-      <DataGrid<{
+    <DataGrid<{
         id: number;
         name: string;
         img: string;
         isLoading: boolean;
       }>
-        rowHeight={100}
-        rows={pokemon}
-        rowCount={count}
-        columns={columns}
-        page={page}
-        pageSize={limit}
-        pagination={true}
-        paginationMode={'server'}
-        loading={isLoading}
-        onPageChange={(newPage) => onPageChange(newPage)}
-        onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
-        disableSelectionOnClick
-        onRowClick={(params: GridRowParams<{
+      rowHeight={100}
+      rows={pokemon}
+      rowCount={count}
+      columns={columns}
+      page={page}
+      pageSize={limit}
+      pagination={true}
+      paginationMode={'server'}
+      loading={isLoading}
+      onPageChange={(newPage) => onPageChange(newPage)}
+      onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
+      rowsPerPageOptions={Constants.TABLE_ROWS_PER_PAGE_OPTIONS}
+      disableSelectionOnClick
+      onRowClick={(params: GridRowParams<{
           id: number;
           name: string;
           img: string;
           isLoading: boolean;
         }>) => {
-          DialogService.getInstance().setDialog({
-            type: 'openModal',
-            title: `${params.row.name} Details`,
-            modal: <PokemonViewerQuery name={params.row.name} />,
-          });
-        }}
-      />
-    </div>
+        DialogService.getInstance().setDialog({
+          type: 'openModal',
+          title: `${params.row.name} Details`,
+          modal: <PokemonViewerQuery name={params.row.name} />,
+        });
+      }}
+    />
   );
 };
 

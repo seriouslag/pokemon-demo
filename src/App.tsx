@@ -3,6 +3,7 @@ import PokemonListHooks from './components/PokemonList/PokemonListHooks';
 import PokemonListRedux from './components/PokemonList/PokemonListRedux';
 import PokemonListHooksQuery from './components/PokemonList/PokemonListHooksQuery';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import DialogPortal, { DialogService } from './components/DialogPortal';
 
 const queryClient = new QueryClient({
@@ -16,6 +17,14 @@ const queryClient = new QueryClient({
   },
 });
 
+const ColumnWrapper: React.FC<{
+  height?: number;
+  minWidth?: number;
+  children: React.ReactNode
+}> = ({ height = 600, minWidth = 350, children }) => {
+  return <div style={{ height, minWidth }}>{children}</div>;
+};
+
 const App: React.FC = () => {
   const dialogService = DialogService.getInstance();
 
@@ -27,19 +36,26 @@ const App: React.FC = () => {
           <div className="container grid gap-4 lg:grid-cols-3">
             <div>
               <h1 className='text-lg'>Using Redux</h1>
-              <PokemonListRedux />
+              <ColumnWrapper>
+                <PokemonListRedux />
+              </ColumnWrapper>
             </div>
             <div>
               <h1 className='text-lg'>Using Hooks</h1>
-              <PokemonListHooks />
+              <ColumnWrapper>
+                <PokemonListHooks />
+              </ColumnWrapper>
             </div>
             <div>
               <h1 className='text-lg'>Using React Query</h1>
-              <PokemonListHooksQuery />
+              <ColumnWrapper>
+                <PokemonListHooksQuery />
+              </ColumnWrapper>
             </div>
           </div>
         </div>
         <DialogPortal dialogService={dialogService} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );
