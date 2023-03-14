@@ -36,13 +36,13 @@ const setPokemonAction = (payload: {
 } as const);
 
 /**
- * Fetch list of pokemon using limit and offset. The result will be mapped to a new array of pokemon
- * with the id, name, img, isLoading, and value properties. The pokemon will be in a loading state until
- * the pokemon details are fetched. In the loading state the img property will be an empty string and
- * the isLoading property will be true and the value property will be null. The pokemon details will be
- * fetched in parallel and the mapped pokemon array will be updated with the fetched details after each update.
- * @param limit - number of pokemon to fetch
- * @param offset - offset of pokemon to fetch
+ * Fetch list of Pokémon using limit and offset. The result will be mapped to a new array of pokemon
+ * with the id, name, img, isLoading, and value properties. The Pokémon will be in a loading state until
+ * the Pokémon details are fetched. In the loading state the img property will be an empty string and
+ * the isLoading property will be true and the value property will be null. The Pokémon details will be
+ * fetched in parallel and the mapped Pokémon array will be updated with the fetched details after each update.
+ * @param limit - number of Pokémon to fetch
+ * @param offset - offset of Pokémon to fetch
  */
 export const fetchPokemonList = (limit: number, offset: number) => async (dispatch: AppDispatch) => {
   try {
@@ -58,7 +58,7 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
     dispatch(fetchPokemonListSuccess(pokemonList));
     
 
-    // map pokemon results
+    // map Pokémon results
     const mappedPokemon = pokemonList.results.map((pokemon, index) => ({
       id: offset + index + 1,
       name: pokemon.name,
@@ -70,20 +70,20 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
     // set mapped pokemon
     dispatch(setPokemonAction(mappedPokemon));
 
-    // map pokemon results to promises to fetch pokemon details
+    // map Pokémon results to promises to fetch Pokémon details
     const promises = mappedPokemon.map(async (pokemon, index) => {
       const pokeId = pokemon.id;
-      // fetch pokemon details
+      // fetch Pokémon details
       const pokemonDetail = await pokemonApi.pokemon.pokemonRead({ name: pokemon.name });
-      // find pokemon in mapped pokemon
-      // doing this to make sure the pokemon is still in the list in case the user has changed the page
+      // find Pokémon in mapped pokemon
+      // doing this to make sure the Pokémon is still in the list in case the user has changed the page
       const foundPokemon = mappedPokemon.findIndex((pokemon) => pokemon.id === pokeId);
       if (foundPokemon < 0) {
         return;
       }
-      // create new mapped pokemon array
+      // create new mapped Pokémon array
       const newMappedPokemon = [...mappedPokemon];
-      // update pokemon details with fetched details
+      // update Pokémon details with fetched details
       newMappedPokemon[index].img = pokemonDetail.sprites.front_default ?? '../../public/no-image.webp';
       newMappedPokemon[index].isLoading = false;
       newMappedPokemon[index].value = pokemonDetail;
