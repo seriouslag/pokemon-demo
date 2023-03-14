@@ -50,8 +50,12 @@
     "lerna": "^6.4.1",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.0-dev.20230203",
     "vite": "^4.1.0",
     "vite-tsconfig-paths": "^4.0.5"
+  },
+  "overrides": {
+    "typescript": "$typescript"
   }
 }
