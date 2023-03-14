@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className="flex flex-col justify-center">
-        <h1 className='text-2xl'>Pokemon API</h1>
+        <h1 className='text-2xl'>Pokémon API</h1>
         <div className="container grid gap-4 lg:grid-cols-1">
           <div>
             <h1 className='text-lg'>State is using a hook</h1>
