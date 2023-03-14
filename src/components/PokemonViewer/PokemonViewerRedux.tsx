@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PokemonViewer from './PokemonViewer';
 
 type PokemonListReduxProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & {
-  /** Name of pokemon */
+  /** Name of Pokémon */
   name: string;
 };
 
