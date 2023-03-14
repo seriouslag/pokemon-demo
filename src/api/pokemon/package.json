@@ -1,7 +1,7 @@
 {
 	"name": "@myapi/api-pokemon",
 	"version": "0.0.1",
-	"description": "Pokemon API",
+	"description": "Pokémon API",
 	"scripts": {
 		"downloadApi": "ts-node --project tsconfig.json src/tools/download-api.ts",
 		"generateApi": "rm -rf src/generated/* && openapi --input api/api.yaml --output src/generated --useOptions --useUnionTypes --name PokemonClient --client fetch"

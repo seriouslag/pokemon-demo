@@ -49,7 +49,7 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
     dispatch(fetchPokemonListSuccess(pokemonList));
     
 
-    // map pokemon results
+    // map Pokémon results
     const mappedPokemon = pokemonList.results.map((pokemon, index) => ({
       id: offset + index + 1,
       name: pokemon.name,
@@ -61,20 +61,20 @@ export const fetchPokemonList = (limit: number, offset: number) => async (dispat
     // set mapped pokemon
     dispatch(setPokemonAction(mappedPokemon));
 
-    // map pokemon results to promises to fetch pokemon details
+    // map Pokémon results to promises to fetch Pokémon details
     const promises = mappedPokemon.map(async (pokemon, index) => {
       const pokeId = pokemon.id;
-      // fetch pokemon details
+      // fetch Pokémon details
       const pokemonDetail = await pokemonApi.pokemonRead({ name: pokemon.name });
-      // find pokemon in mapped pokemon
-      // doing this to make sure the pokemon is still in the list in case the user has changed the page
+      // find Pokémon in mapped pokemon
+      // doing this to make sure the Pokémon is still in the list in case the user has changed the page
       const foundPokemon = mappedPokemon.findIndex((pokemon) => pokemon.id === pokeId);
       if (foundPokemon < 0) {
         return;
       }
-      // create new mapped pokemon array
+      // create new mapped Pokémon array
       const newMappedPokemon = [...mappedPokemon];
-      // update pokemon details with fetched details
+      // update Pokémon details with fetched details
       newMappedPokemon[index].img = pokemonDetail.sprites.front_default ?? '../../public/no-image.webp';
       newMappedPokemon[index].isLoading = false;
       newMappedPokemon[index].value = pokemonDetail;
