@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { PokemonHook } from './PokemonHook';
 
 /**
- * Hook to fetch pokemon list and details
+ * Hook to fetch Pokémon list and details
  */
 export const usePokemon = (props: {
   /** Limit of results to fetch */
@@ -28,13 +28,13 @@ export const usePokemon = (props: {
   }[]>([]);
 
   /**
-   * Fetch list of pokemon using limit and offset. The result will be mapped to a new array of pokemon
-   * with the id, name, img, isLoading, and value properties. The pokemon will be in a loading state until
-   * the pokemon details are fetched. In the loading state the img property will be an empty string and
-   * the isLoading property will be true and the value property will be null. The pokemon details will be
-   * fetched in parallel and the mapped pokemon array will be updated with the fetched details after each update.
-   * @param limit - number of pokemon to fetch
-   * @param offset - offset of pokemon to fetch
+   * Fetch list of Pokémon using limit and offset. The result will be mapped to a new array of pokemon
+   * with the id, name, img, isLoading, and value properties. The Pokémon will be in a loading state until
+   * the Pokémon details are fetched. In the loading state the img property will be an empty string and
+   * the isLoading property will be true and the value property will be null. The Pokémon details will be
+   * fetched in parallel and the mapped Pokémon array will be updated with the fetched details after each update.
+   * @param limit - number of Pokémon to fetch
+   * @param offset - offset of Pokémon to fetch
    */
   const fetchPokemonList = async (limit: number, offset: number) => {
     // reset loading state
@@ -43,12 +43,12 @@ export const usePokemon = (props: {
     setOffset(offset);
     setLimit(limit);
     try {
-      // fetch pokemon list
+      // fetch Pokémon list
       const pokemonList = await pokemonApiContext.pokemon.pokemonList({ limit, offset });
-      // set pokemon list
+      // set Pokémon list
       setPokemonList(pokemonList);
 
-      // map pokemon results
+      // map Pokémon results
       const mappedPokemon = pokemonList.results.map((pokemon, index) => ({
         id: offset + index + 1,
         name: pokemon.name,
@@ -60,20 +60,20 @@ export const usePokemon = (props: {
       // set mapped pokemon
       setPokemon(mappedPokemon);
 
-      // map pokemon results to promises to fetch pokemon details
+      // map Pokémon results to promises to fetch Pokémon details
       const promises = mappedPokemon.map(async (pokemon, index) => {
         const pokeId = pokemon.id;
-        // fetch pokemon details
+        // fetch Pokémon details
         const pokemonDetail = await pokemonApiContext.pokemon.pokemonRead({ name: pokemon.name });
-        // find pokemon in mapped pokemon
-        // doing this to make sure the pokemon is still in the list in case the user has changed the page
+        // find Pokémon in mapped pokemon
+        // doing this to make sure the Pokémon is still in the list in case the user has changed the page
         const foundPokemon = mappedPokemon.findIndex((pokemon) => pokemon.id === pokeId);
         if (foundPokemon < 0) {
           return;
         }
-        // create new mapped pokemon array
+        // create new mapped Pokémon array
         const newMappedPokemon = [...mappedPokemon];
-        // update pokemon details with fetched details
+        // update Pokémon details with fetched details
         newMappedPokemon[index].img = pokemonDetail.sprites.front_default ?? '../../public/no-image.webp';
         newMappedPokemon[index].isLoading = false;
         newMappedPokemon[index].value = pokemonDetail;
