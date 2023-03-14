@@ -2,7 +2,7 @@ import { useGetPokemonByName } from '../../hooks/usePokemonQuery';
 import PokemonViewer from './PokemonViewer';
 
 type PokemonViewerQueryProps = {
-  /** Name of pokemon */
+  /** Name of Pokémon */
   name: string;
 };
 
