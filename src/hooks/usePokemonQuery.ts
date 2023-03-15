@@ -72,10 +72,13 @@ export const usePokemonQuery = (props: {
   const [limit, setLimit] = useState(props.limit);
   const [offset, setOffset] = useState(props.offset);
 
+  // Fetch list of Pokémon
   const { error, isLoading: getPokemonListIsLoading, data: pokemonList } = useGetPokemonList(limit, offset);
 
+  // Fetch Pokémon details in parallel
   const results = useGetPokemonByNames(pokemonList?.results.map((pokemon) => pokemon.name) ?? [], !!pokemonList);
 
+  // Map results to new array of pokemon
   const pokemon = results.map((result, index) => {
     const { data: pokemon, isLoading } = result;
 
