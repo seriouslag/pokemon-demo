@@ -1,5 +1,5 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
-import { clientFromContext } from '@myapi/api-pokemon';
+import { clientFromContext, ListResponse } from '@myapi/api-pokemon';
 import { useState } from 'react';
 import { PokemonHook } from './PokemonHook';
 
@@ -71,9 +71,16 @@ export const usePokemonQuery = (props: {
 }): PokemonHook => {
   const [limit, setLimit] = useState(props.limit);
   const [offset, setOffset] = useState(props.offset);
+  const [pokemonList, setPokemonList] = useState<ListResponse|null>(null);
 
   // Fetch list of Pokémon
-  const { error, isLoading: getPokemonListIsLoading, data: pokemonList } = useGetPokemonList(limit, offset);
+  const { error, isLoading: getPokemonListIsLoading, data: pokemonListData } = useGetPokemonList(limit, offset);
+
+  // Update saved list if data is different
+  if (pokemonListData && pokemonListData !== pokemonList) {
+    // Update saved list
+    setPokemonList(pokemonListData);
+  }
 
   // Fetch Pokémon details in parallel
   const results = useGetPokemonByNames(pokemonList?.results.map((pokemon) => pokemon.name) ?? [], !!pokemonList);
