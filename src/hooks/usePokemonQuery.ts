@@ -73,18 +73,19 @@ export const usePokemonQuery = (props: {
   const [offset, setOffset] = useState(props.offset);
   const [pokemonList, setPokemonList] = useState<ListResponse|null>(null);
 
-  // fetch pokemon list
+  // Fetch list of Pokémon
   const { error, isLoading: getPokemonListIsLoading, data: pokemonListData } = useGetPokemonList(limit, offset);
 
-  // update pokemon list if the data changes
+  // Update saved list if data is different
   if (pokemonListData && pokemonListData !== pokemonList) {
+    // Update saved list
     setPokemonList(pokemonListData);
   }
 
-  // fetch pokemon details
+  // fetch Pokémon details
   const results = useGetPokemonByNames(pokemonList?.results.map((pokemon) => pokemon.name) ?? [], !!pokemonList);
 
-  // map pokemon list to pokemon
+  // map Pokémon list to pokemon
   const pokemon = results.map((result, index) => {
     const { data: pokemon, isLoading } = result;
 
